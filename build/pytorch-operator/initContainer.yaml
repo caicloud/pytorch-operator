@@ -1,5 +1,5 @@
 - name: init-pytorch
-  image: alpine:3.10
+  image: cargo.caicloud.xyz/library/busybox:1.30.0
   imagePullPolicy: IfNotPresent
   resources:
     limits:
