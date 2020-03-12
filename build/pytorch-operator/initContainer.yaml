@@ -1,5 +1,5 @@
 - name: init-pytorch
-  image: cargo.caicloud.xyz/library/busybox:1.30.0
+  image: {{.InitContainerImage}}
   imagePullPolicy: IfNotPresent
   resources:
     limits:
