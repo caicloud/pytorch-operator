@@ -1,0 +1,40 @@
+services:
+  pytorch-operator-service:
+    selector:
+      app: pytorch-operator
+    type: ClusterIP
+    ports:
+      monitoring-port:
+        port: 8443
+        protocol: TCP
+        targetPort: monitoring-port
+        nodePort: 8443
+
+deployments:
+  pytorch-operator:
+    replicas: 1
+    serviceAccountName: default
+    containers:
+      pytorch-operator-container:
+        image:
+          registry: cargo.caicloud.xyz/release
+          name: pytorch-operator
+          tag: v1.0.6
+          pullPolicy: IfNotPresent
+        command:
+          - /pytorch-operator
+          - --alsologtostderr
+          - -v=1
+          - --monitoring-port=8443
+        args: [
+        "-init-container-image",
+        "[[ registry_library ]]/busybox:1.30.0"
+        ]
+        resources:
+          useDefault: false
+          limits:
+            cpu: 100m
+            memory: 200Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
